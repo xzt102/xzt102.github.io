@@ -37,10 +37,17 @@
 <p></p>
 <h2>Research Experience</h2>
 <p> </p><ul> 
-<li>Dynamic parallelism optimization for irregular applications on GPGPUs. </i></li>
-<li>Compiler-assisted optimization on manycore platforms. <i> 2014 - Present. </i></li>
-<li>Understanding CPU-GPU co-run degradations on integrated heterogeneous processors. <i>2014.</i></li>
-<li>Built a two-layer video codec benchmark suite. Modified x264 codec into a fine-grain pipelined version to achieve task-level parallelism. <i>2011 - 2013.</i></li><li>Characterized program phases using Rodinia benchmark suite. <i>2010 - 2011.</i></li> </ul><p></p>
+<li>Optimizing Dynamic parallelism for irregular applications on GPGPUs. </li>
+	<ul>
+	<li>Designed a runtime control system which dynamically decide the child kernel launch. Such a control system allows a better mix of dynamically generated child kernels and parent kernels for the scheduler to effectively hide the launch overheads and improve the utilization of the GPU resources.</li>
+	<li>Analyzed data reuse and designed locality-aware scheduler for dynamic parallelism.</li>
+	</ul>
+<li>Compiler-assisted optimization on manycore platforms. </li>
+	<ul>
+	<li>Proposed a loop iteration scheduling strategy which considers both bank-level parallelism (from an inter-core perspective) and bank reuse (from an intra-core perspective) for irregular applications.</li>
+	<li>Designed a compiler algorithm that partitions the computations in a given loop nest into subcomputations and schedules the resulting subcomputations on manycore system with the goal of reducing the distance-to-data on the on-chip network.</li>
+	</ul>
+</ul><p></p>
 
 <h2>Publications</h2>
 
