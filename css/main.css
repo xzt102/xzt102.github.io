@@ -314,11 +314,21 @@ a:hover { text-decoration: underline; }
   gap: 1.1rem;
 }
 
-.pub-item {
+.pub-item {}
+
+/* Inline variant: badge left, title right on same line (used on index.html) */
+.pub-list-inline .pub-item {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 0 0.85rem;
   align-items: start;
+}
+.pub-list-inline .venue-badge {
+  margin-bottom: 0;
+  margin-top: 0.15rem;
+}
+.pub-list-inline .pub-body {
+  padding-top: 0.15rem;
 }
 
 .venue-badge {
@@ -331,8 +341,8 @@ a:hover { text-decoration: underline; }
   border-radius: 4px;
   padding: 0.15rem 0.45rem;
   white-space: nowrap;
-  margin-top: 0.15rem;
   letter-spacing: 0.01em;
+  margin-bottom: 0.35rem;
 }
 
 .pub-body {}
@@ -496,7 +506,6 @@ a:hover { text-decoration: underline; }
   .hero-links { justify-content: center; }
   .hero-photo img { width: 150px; }
 
-  .pub-item { grid-template-columns: 1fr; gap: 0.4rem; }
   .venue-badge { margin-bottom: 0.2rem; }
 
   .card-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
