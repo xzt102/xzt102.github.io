@@ -1,112 +1,112 @@
 <!DOCTYPE html>
-<!-- saved from url=(0079)file:///E:/Downloads/xzt102.github.io-master/xzt102.github.io-master/index.html -->
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="generator" content="jemdoc, see http://jemdoc.jaboc.net/">
-
-
-
-<title>Xulong Tang</title>
-<meta name="keywords" content="Xulong Tang, Xulong Tang, Penn State">
-<link rel="stylesheet" href="./css/main.css" type="text/css">
-<title>Xulong Tang</title>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Research — Xulong Tang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/main.css">
 </head>
-
 <body>
 
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="./index.html">Xulong Tang</a>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="./index.html">Home</a></li>
+      <li><a href="./research.html">Research</a></li>
+      <li><a href="./publications.html">Publications</a></li>
+      <li><a href="./talks.html">Talks</a></li>
+      <li><a href="./teaching.html">Teaching</a></li>
+      <li><a href="./services.html">Services</a></li>
+    </ul>
+  </div>
+</nav>
 
-<div class="myintro">
-<h1>Xulong Tang</h1>
-<table class="imgtable"><tbody><tr><td width="270x">
-<img src="./index_files/DSC_1295 2.png" alt="Xulong Tang" width="250px" height="222px">&nbsp;</td>
-<td>
-<p align="justify">Welcome! I am an associate professor in the Department of Computer Science at the University of Pittsburgh. My research spans computer architecture and systems, with a focus on multi-GPU architectures, high-performance LLM infrastructure and systems, edge AI, and quantum systems.
-I received my Ph.D. from Penn State and Master from USTC. 
-</p>
-<p><strong>Contact: </strong>
-210 S. Bouquet Street, SENSQ 6115.
-<a href="https://cs.pitt.edu/" target="_blank">Department of Computer Science,</a> 
-<a href="https://www.pitt.edu/" target="_blank">University of Pittsburgh</a>, Pittsburgh, PA, 15213 <br> 
-<strong>Email: </strong>
-tax6 AT pitt DOT edu
- </p>
-<div class="links">
-<a href="http://xzt102.github.io/XulongTang-Resume.pdf" target="_blank" style="font-weight: bold;color: #224b8d">Curriculum Vitae</a>
+<main>
+<div class="container">
+
+  <div class="page-header">
+    <h1>Research</h1>
+    <p class="subtitle">Computer architecture &amp; systems — software&ndash;hardware co-design for emerging applications</p>
+  </div>
+
+  <section class="section">
+    <h2 class="section-title">Current Research Focus</h2>
+    <p style="margin-bottom:1.25rem;font-size:0.95rem;line-height:1.7;">
+      My research interests lie in the area of both compiler and computer architecture. More specifically, my group works on
+      software&ndash;hardware co-designs for emerging applications, exploring algorithm-level innovations and advanced architecture designs.
+    </p>
+
+    <div class="research-cards">
+      <div class="research-card">
+        <h3>Multi-GPU &amp; LLM Infrastructure</h3>
+        <p>Fueling machine learning and deep learning applications at scale on single- and multi-GPU systems.
+        Exploring DNN characteristics, compiler optimizations, runtime management, and next-generation GPU architecture features.</p>
+      </div>
+      <div class="research-card">
+        <h3>Quantum Computing Systems</h3>
+        <p>Building efficient quantum computing ecosystems. Leveraging system optimizations to simulate large quantum circuits,
+        developing front-end/back-end compiler support, and exploring heterogeneous quantum&ndash;classical system designs.</p>
+      </div>
+      <div class="research-card">
+        <h3>Edge AI</h3>
+        <p>Software&ndash;hardware co-design for addressing performance bottlenecks in edge platforms.
+        Developing compiler-assisted paging, zero-copy remapping, and high-performance persistence support for secure non-volatile memory.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Past Research (Ph.D.)</h2>
+    <ul style="list-style:disc;padding-left:1.25rem;font-size:0.93rem;line-height:1.7;display:flex;flex-direction:column;gap:0.75rem;">
+      <li>
+        <strong>Optimizing Dynamic Parallelism for Irregular Applications on GPGPUs.</strong>
+        Designed a runtime control system that dynamically decides child kernel launch, enabling better mixing of parent and child kernels
+        to hide launch overheads and improve GPU utilization. Analyzed data reuse and designed locality-aware schedulers.
+      </li>
+      <li>
+        <strong>Compiler-assisted Optimization on Manycore Platforms.</strong>
+        Proposed a loop iteration scheduling strategy considering both bank-level parallelism (inter-core) and bank reuse (intra-core) for
+        irregular applications. Designed a compiler algorithm to partition computations into subcomputations scheduled for minimal
+        on-chip network distance-to-data.
+      </li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Experience</h2>
+    <ul style="list-style:none;display:flex;flex-direction:column;gap:0.65rem;">
+      <li style="font-size:0.93rem;">
+        Internship at <a href="https://www.amd.com/en-us/who-we-are/corporate-information/research" target="_blank">AMD Research</a>,
+        Aug&ndash;Dec 2017
+      </li>
+      <li style="font-size:0.93rem;">
+        Internship at <a href="http://www.sra.samsung.com/" target="_blank">Samsung Research America</a>,
+        Summer 2015
+      </li>
+      <li style="font-size:0.93rem;">
+        Internship at <a href="http://english.ict.cas.cn/" target="_blank">Institute of Computing Technology</a>,
+        <a href="http://english.cas.cn/" target="_blank">Chinese Academy of Sciences</a>,
+        2011&ndash;2013
+      </li>
+    </ul>
+  </section>
+
 </div>
-<div class="links">
-<a href="https://scholar.google.com/citations?user=jmjRUi4AAAAJ&hl=en" target="_blank" style="font-weight: bold;color: #224b8d">Google Scholar</a>
-</div>
-<div class="links">
-<a href="https://dblp.org/pers/hd/t/Tang:Xulong" target="_blank" style="font-weight: bold;color: #224b8d">DBLP</a> <br>
-</div>
-<div class="links">
-<a href="https://www.linkedin.com/in/xulong-tang-14a6a393" target="_blank" style="font-weight: bold;color: #224b8d">LinkedIn</a> <br>
-</div>
-</td></tr></tbody></table>
+</main>
 
-</div>
+<footer class="site-footer">
+  <div class="container">
+    <p>Xulong Tang, University of Pittsburgh</p>
+  </div>
+</footer>
 
-<ul class="menubar">
-  <li class="menubar"><a class="menubar" href="./index.html">Home</a></li>
-  <li class="menubar"><a class="menubar" href="./research.html">Research</a></li>
-  <li class="menubar"><a class="menubar" href="./publications.html">Publications</a></li>
-  <li class="menubar"><a class="menubar" href="./talks.html">Talks</a></li>
-  <li class="menubar"><a class="menubar" href="./teaching.html">Teaching</a></li>
-  <li class="menubar"><a class="menubar" href="./services.html">Services</a></li>
-</ul>
-
-
-<h2>Research</h2>
-<p >My research interests lie in the area of both compiler and computer architecture. More specifically, my group works on software-hardware co-designs for emerging applications, exploring algorithm-level innovations and advanced architecture designs. My current research focuses on the following projects: 
-
-<ul>
-	<li><b>Feuling machine learning and deep learning applications at scale on single- and multi- GPU systems.</b></li>
-	<ul><li>Exploring machine learning and DNN characteristics and algorithm innovations.</li>
-	<li>Developing efficient compiler optimizations and runtime management.</li>
-	<li>Designing architectures and system features toward next-generation GPU systems.</li>
-	</ul>
-</ul>
-<ul>
-	<li><b>Building efficient quantum computing simulation Eco-system.</b></li>
-	<ul><li>Leveraging innovative system optimizations to simulate large and complex quantum circuits.</li>
-	<li>Developing both front-end and back-end quantum compiler supports for complex quantum circuits.</li>
-	<li>Building software-hardware co-optimizations for domain-specific (e.g., quantum chemical applications) quantum applications.</li>
-	<li>Exploring heterogeneous system designs that consists of quantum devices and classical devices.</li>
-	</ul>
-</ul>	
-<ul>
-	<li><b>A Software and Hardware Co-Design for Addressing the Performance Bottlenecks in Secure Non-Volatile Memory</b></li>
-	<ul><li>Developing zero-copy page remapping and parallel remapping and computation techniques for SGX.</li>
-	<li>Developing compiler-assisted user controlled paging.</li>
-	<li>Designing high performance persistence support in secure NVM.</li>
-	</ul>
-</ul>
-
-</p>
-
-<p>Some past research projects during my Ph.D: </p>
-
-
-<ul> 
-<li>Optimizing Dynamic parallelism for irregular applications on GPGPUs. </li>
-	<ul>
-	<li>Designed a runtime control system which dynamically decide the child kernel launch. Such a control system allows a better mix of dynamically generated child kernels and parent kernels for the scheduler to effectively hide the launch overheads and improve the utilization of the GPU resources.</li>
-	<li>Analyzed data reuse and designed locality-aware scheduler for dynamic parallelism.</li>
-	</ul>
-<li>Compiler-assisted optimization on manycore platforms. </li>
-	<ul>
-	<li>Proposed a loop iteration scheduling strategy which considers both bank-level parallelism (from an inter-core perspective) and bank reuse (from an intra-core perspective) for irregular applications.</li>
-	<li>Designed a compiler algorithm that partitions the computations in a given loop nest into subcomputations and schedules the resulting subcomputations on manycore system with the goal of reducing the distance-to-data on the on-chip network.</li>
-	</ul>
-</ul>
-
-<h2>Experience</h2>
-<ul>
-<li><p>Internship at <a href="https://www.amd.com/en-us/who-we-are/corporate-information/research" target="_blank"> AMD Research</a>, Aug-Dec 2017 <br></p>
-</li>
-<li><p>Internship at <a href="http://www.sra.samsung.com/" target="_blank"> Samsung Research America</a>, Summer 2015 <br></p>
-</li>
-<li><p>Internship at <a href="http://english.ict.cas.cn/" target="_blank">Institute of Computing Technology</a>, <a href="http://english.cas.cn/" target="_blank">Chinese Academy of Sciences</a>, 2011-2013 <br></p>
-</li>
-</ul>
-
-</body></html>
+<script src="./js/nav.js"></script>
+</body>
+</html>
