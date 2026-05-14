@@ -883,6 +883,14 @@ a:hover { text-decoration: underline; }
   .nav-links a { width: 100%; padding: 0.55rem 0.5rem; }
   .nav-links a.active { border-bottom: none; border-left: 3px solid var(--color-accent); padding-left: 0.75rem; border-radius: 0; }
 
+  .page-banner {
+    height: 180px;
+    padding-left: 1.5rem;
+    background-position: center center;
+    background-attachment: scroll;
+  }
+  .page-banner h1 { font-size: 1.6rem; }
+
   .lab-hero { height: 260px; }
   .lab-hero-title { font-size: 1.8rem; }
   .lab-hero-subtitle { font-size: 1rem; }
@@ -901,6 +909,8 @@ a:hover { text-decoration: underline; }
 }
 
 @media (max-width: 480px) {
+  .page-banner { height: 140px; padding-left: 1rem; }
+  .page-banner h1 { font-size: 1.3rem; }
   .lab-hero-title { font-size: 1.5rem; }
   .people-grid { grid-template-columns: 1fr 1fr; }
   .news-list { grid-template-columns: 1fr; gap: 0.75rem; }
