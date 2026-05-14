@@ -325,10 +325,7 @@ a:hover { text-decoration: underline; }
   position: relative;
   width: 100%;
   height: 260px;
-  background-image: url('../index_files/banner-inner.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: url('../index_files/banner-inner.jpg') center / cover no-repeat;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -337,10 +334,10 @@ a:hover { text-decoration: underline; }
   overflow: hidden;
 }
 
-.page-banner.banner-people { background-image: url('../index_files/banner-people.jpg'); }
-.page-banner.banner-projects { background-image: url('../index_files/banner-projects.jpg'); }
-.page-banner.banner-publications { background-image: url('../index_files/banner-publications.jpg'); }
-.page-banner.banner-teaching { background-image: url('../index_files/banner-teaching.jpg'); }
+.page-banner.banner-people { background: url('../index_files/banner-people.jpg') center / cover no-repeat; }
+.page-banner.banner-projects { background: url('../index_files/banner-projects.jpg') center / cover no-repeat; }
+.page-banner.banner-publications { background: url('../index_files/banner-publications.jpg') center / cover no-repeat; }
+.page-banner.banner-teaching { background: url('../index_files/banner-teaching.jpg') center / cover no-repeat; }
 
 .page-banner h1 {
   font-size: 2.2rem;
