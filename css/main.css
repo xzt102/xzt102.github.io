@@ -887,8 +887,9 @@ a:hover { text-decoration: underline; }
     height: auto;
     min-height: 120px;
     padding: 2rem 1.5rem;
-    background-size: 100% auto;
-    background-position: center top;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
     background-attachment: scroll;
   }
   .page-banner h1 { font-size: 1.6rem; }
