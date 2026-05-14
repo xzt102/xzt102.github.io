@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects — TANG Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/main.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="./index.html">TANG Lab</a>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="./index.html">Home</a></li>
+      <li><a href="./people.html">Team</a></li>
+      <li><a href="./projects.html" class="active">Projects</a></li>
+      <li><a href="./publications.html">Publications</a></li>
+      <li><a href="./teaching.html">Teaching</a></li>
+      <li><a href="./services.html">Services</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="page-banner banner-projects">
+  <h1>Projects</h1>
+  <p class="subtitle">Scalable GPU systems, AI infrastructure, edge intelligence, vision systems, and quantum computing</p>
+</section>
+
+<main>
+<div class="container">
+
+<!-- ── Research Landscape ───────────────────────────────── -->
+  <section class="section">
+    <div class="research-layout">
+      <div class="research-side">
+        <div class="research-box">
+          <h3>Scalable GPU &amp; AI Hardware Systems</h3>
+          <p>Multi-GPU memory systems, GNN acceleration, hybrid DNN parallelism, LLM serving, KV-cache reuse, and scheduling.</p>
+        </div>
+        <div class="research-box">
+          <h3>Edge AI Systems</h3>
+          <p>Adaptive continual learning, self-supervised training, sparse computation, and real-time inference under tight resource budgets.</p>
+        </div>
+      </div>
+      <div class="research-center">
+        <img src="./index_files/research.png" alt="Research Landscape">
+      </div>
+      <div class="research-side">
+        <div class="research-box">
+          <h3>AI for Computer Vision</h3>
+          <p>Dynamic patchification, token pruning, visual representation learning, 3D Gaussian splatting, and efficient video generation.</p>
+        </div>
+        <div class="research-box">
+          <h3>Quantum Computing Systems</h3>
+          <p>Fault-tolerant compilation, photonic graph-state generation, qLDPC decoding, and quantum-classical acceleration.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Project: Scalable GPU and AI Hardware Systems ───── -->
+  <section class="project-card">
+    <div class="project-header">
+      <h2>Scalable GPU and AI Hardware Systems</h2>
+      <span class="project-status active">Active</span>
+    </div>
+    <p class="project-desc">
+      Building the architecture, memory, and runtime systems for foundation-scale AI. Our work targets the
+      systems barriers that limit multi-GPU platforms and AI workloads: distributed address translation, page placement,
+      inter-GPU data movement, GNN irregularity, hybrid DNN parallelism, attention execution, KV-cache growth, and
+      multi-tenant interference. Looking forward, we are developing RAG-aware serving runtimes, predictive KV reuse,
+      prefill-decode disaggregation support, and accelerator mechanisms for speculative decoding and near-memory
+      KV-cache lookup.
+    </p>
+    <div class="project-tags">
+      <span class="tag">GPU Architecture</span>
+      <span class="tag">GNN Acceleration</span>
+      <span class="tag">LLM Systems</span>
+      <span class="tag">KV Cache</span>
+      <span class="tag">RAG Serving</span>
+      <span class="tag">Runtime Systems</span>
+    </div>
+    <div class="project-papers">
+      <h4>Selected Publications</h4>
+      <ul>
+        <li>arXiv — Chunk-Level KV Cache Reuse for Efficient RAG Serving</li>
+        <li>HPCA 2025 — OASIS: Object-Aware Page Management for Multi-GPU Systems</li>
+        <li>MLSys 2025 — FastTree: Optimizing Attention Kernel and Runtime for Tree-Structured LLM Inference</li>
+        <li>ASPLOS 2025 — Cascade: A Dependency-Aware Efficient Training Framework for Temporal GNNs</li>
+        <li>ICML 2025 — MemFreezing: Adversarial Attack on Temporal GNNs under Limited Future Knowledge</li>
+        <li>HPCA 2024 — GRIT: Enhancing Multi-GPU Performance with Fine-Grained Dynamic Page Placement</li>
+        <li>MICRO 2024 — STAR: Sub-Entry Sharing-Aware TLB for Multi-Instance GPU</li>
+        <li>HPCA 2023 — CEGMA: Coordinated Elastic Graph Matching Acceleration for Graph Matching Networks</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── Project: Edge AI ─────────────────────────────────── -->
+  <section class="project-card">
+    <div class="project-header">
+      <h2>Edge AI Systems</h2>
+      <span class="project-status active">Active</span>
+    </div>
+    <p class="project-desc">
+      Enabling AI models to adapt continuously on mobile GPUs and IoT-class devices without exceeding strict memory,
+      latency, energy, and thermal budgets. Our work restructures learning algorithms and system execution to reduce
+      redundant computation, freeze or prune low-value work, and preserve responsiveness as edge environments evolve.
+    </p>
+    <div class="project-tags">
+      <span class="tag">Edge Computing</span>
+      <span class="tag">On-Device Learning</span>
+      <span class="tag">Self-Supervised Learning</span>
+      <span class="tag">Hardware-Software Co-design</span>
+      <span class="tag">Efficient Inference</span>
+    </div>
+    <div class="project-papers">
+      <h4>Selected Publications</h4>
+      <ul>
+        <li>arXiv — EdgeOL: Efficient In-situ Online Learning on Edge Devices</li>
+        <li>ICLR 2025 — Mutual Effort for Efficiency: Similarity-Based Token Pruning for Vision Transformers</li>
+        <li>ICLR 2024 — Waxing-and-Waning: Efficient Self-Supervised Learning</li>
+        <li>ICLR 2023 Spotlight — SmartFRZ: Attention-Based Layer Freezing for Efficient Training</li>
+        <li>DAC 2024 — LOTUS: Learning-Based Online Thermal and Latency Variation Management for Edge Devices</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── Project: AI for Vision ───────────────────────────── -->
+  <section class="project-card">
+    <div class="project-header">
+      <h2>AI for Computer Vision</h2>
+      <span class="project-status active">Active</span>
+    </div>
+    <p class="project-desc">
+      Developing systems techniques for high-quality visual intelligence and generation. A central direction is adaptive video
+      generation, where patchification and pruning co-evolve with the denoising process so computation follows the regions,
+      frames, and temporal dynamics that matter most. We also study hardware-aware acceleration for 3D Gaussian splatting,
+      efficient visual representation learning, and low-precision vision training.
+    </p>
+    <div class="project-tags">
+      <span class="tag">Computer Vision</span>
+      <span class="tag">Video Diffusion</span>
+      <span class="tag">Dynamic Patchification</span>
+      <span class="tag">3D Gaussian Splatting</span>
+      <span class="tag">Efficient Training</span>
+    </div>
+    <div class="project-papers">
+      <h4>Selected Publications</h4>
+      <ul>
+        <li>CVPR 2026 — Content-Aware Dynamic Patchification for Efficient Video Diffusion</li>
+        <li>arXiv — Accelerating 3D Gaussian Splatting with Tensor Cores</li>
+        <li>ICLR 2025 — Mutual Effort for Efficiency: Similarity-Based Token Pruning for Vision Transformers</li>
+        <li>ICLR 2024 — Waxing-and-Waning: Efficient Self-Supervised Learning</li>
+        <li>ECCV 2022 — Generator-Free Low-Precision DNN Training with Stochastic Rounding</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── Project: Quantum Computing Systems ───────────────── -->
+  <section class="project-card">
+    <div class="project-header">
+      <h2>Quantum Computing Systems</h2>
+      <span class="project-status active">Active</span>
+    </div>
+    <p class="project-desc">
+      Building compiler, architecture, and classical-acceleration support for scalable and fault-tolerant quantum computing.
+      Our work targets noisy and heterogeneous hardware, including photonic systems and future multi-species platforms, by
+      mapping quantum programs into reliable execution plans, reducing re-execution overheads, and accelerating simulation,
+      decoding, and error-correction loops with GPUs.
+    </p>
+    <div class="project-tags">
+      <span class="tag">Quantum Compilers</span>
+      <span class="tag">Photonic Computing</span>
+      <span class="tag">Fault Tolerance</span>
+      <span class="tag">qLDPC Decoding</span>
+      <span class="tag">Quantum-Classical Systems</span>
+    </div>
+    <div class="project-papers">
+      <h4>Selected Publications</h4>
+      <ul>
+        <li>ICCAD 2025 — STMC: Small-Tile Multiple-Copy Compilation for Reliable Measurement-Based Quantum Computing</li>
+        <li>ISCA 2025 — Reinforcement Learning-Guided Graph State Generation in Photonic Quantum Computers</li>
+        <li>ASPLOS 2024 — FMCC: Flexible Measurement-Based Quantum Computation over Cluster State</li>
+        <li>ASPLOS 2024 — QRCC: Evaluating Large Quantum Circuits on Small Quantum Computers</li>
+        <li>HPCA 2022 — Q-GPU: Optimizations for Quantum Circuit Simulation Using GPUs</li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <img src="./index_files/pitt-seal.png" alt="University of Pittsburgh" class="footer-logo">
+      </div>
+      <div class="footer-info">
+        <p class="footer-lab-name">TANG Lab</p>
+        <p class="footer-address">Department of Computer Science, University of Pittsburgh</p>
+        <p class="footer-address">210 S. Bouquet Street, SENSQ 6514, Pittsburgh, PA 15213</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="./js/nav.js"></script>
+</body>
+</html>

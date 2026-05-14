@@ -3,12 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Xulong Tang</title>
-  <meta name="description" content="Xulong Tang — Associate Professor, Computer Science, University of Pittsburgh">
-  <meta name="keywords" content="Xulong Tang, computer architecture, GPU, LLM, quantum computing, edge AI, Pitt">
+  <title>TANG Lab — Transformative · Advancing · Navigating · Generative</title>
+  <meta name="description" content="TANG Lab — Transformative, Advancing, Nimble, Generative AI Systems at the University of Pittsburgh">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./css/main.css">
 </head>
 <body>
@@ -16,239 +15,81 @@
 <!-- ── Navigation ─────────────────────────────────────────── -->
 <nav class="site-nav">
   <div class="nav-inner">
-    <a class="nav-brand" href="./index.html">Xulong Tang</a>
+    <a class="nav-brand" href="./index.html">TANG Lab</a>
     <button class="nav-toggle" aria-label="Toggle navigation">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav-links">
-      <li><a href="./index.html">Home</a></li>
-      <li><a href="./research.html">Research</a></li>
+      <li><a href="./index.html" class="active">Home</a></li>
+      <li><a href="./people.html">Team</a></li>
+      <li><a href="./projects.html">Projects</a></li>
       <li><a href="./publications.html">Publications</a></li>
-      <li><a href="./talks.html">Talks</a></li>
       <li><a href="./teaching.html">Teaching</a></li>
       <li><a href="./services.html">Services</a></li>
     </ul>
   </div>
 </nav>
 
+<!-- ── Hero Banner ────────────────────────────────────────── -->
+<section class="lab-hero">
+  <div class="lab-hero-overlay"></div>
+  <div class="lab-hero-content">
+    <h1 class="lab-hero-title">TANG Lab</h1>
+    <p class="lab-hero-subtitle">Transformative · Advancing · Navigating · Generative</p>
+    <p class="lab-hero-dept">Department of Computer Science, University of Pittsburgh</p>
+  </div>
+</section>
+
 <main>
 <div class="container">
 
-  <!-- ── Hero ───────────────────────────────────────────── -->
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="hero-photo">
-        <img src="./index_files/photo.jpg" alt="Xulong Tang" width="200">
-      </div>
-      <div class="hero-content">
-        <h1 class="hero-name">Xulong Tang</h1>
-        <p class="hero-title">Associate Professor &middot; Department of Computer Science &middot; University of Pittsburgh</p>
-        <p class="hero-bio">
-          Welcome! I am an associate professor in the Department of Computer Science at the University of Pittsburgh.
-          My research spans computer architecture and systems, with a focus on multi-GPU architectures,
-          high-performance LLM infrastructure and systems, edge AI, and quantum systems.
-          I received my Ph.D. from Penn State and Master from USTC.
-        </p>
-        <p class="hero-contact">
-          <strong>Contact:</strong> 210 S. Bouquet Street, SENSQ 6115.
-          <a href="https://cs.pitt.edu/" target="_blank">Department of Computer Science</a>,
-          <a href="https://www.pitt.edu/" target="_blank">University of Pittsburgh</a>, Pittsburgh, PA 15213<br>
-          <strong>Email:</strong> tax6 AT pitt DOT edu
-        </p>
-        <div class="hero-links">
-          <a class="btn" href="http://xzt102.github.io/XulongTang-Resume.pdf" target="_blank">Curriculum Vitae</a>
-          <a class="btn" href="https://scholar.google.com/citations?user=jmjRUi4AAAAJ&hl=en" target="_blank">Google Scholar</a>
-          <a class="btn" href="https://dblp.org/pers/hd/t/Tang:Xulong" target="_blank">DBLP</a>
-          <a class="btn" href="https://www.linkedin.com/in/xulong-tang-14a6a393" target="_blank">LinkedIn</a>
-        </div>
-      </div>
-    </div>
+  <!-- ── About the Lab ─────────────────────────────────────── -->
+  <section class="section">
+    <h2 class="section-title">About</h2>
+    <p class="section-text">
+      The TANG Lab at the University of Pittsburgh is building the computing foundation for
+      the agentic AI computing era. As AI models grow more capable, the challenge shifts
+      to whether the underlying systems can train, serve, adapt, and reason at the
+      scale, speed, and efficiency that future applications will demand. Our goal is to
+      make AI infrastructure fundamentally more scalable, more efficient, and more
+      accessible, from datacenter GPU clusters and heterogeneous accelerators to edge
+      devices and emerging quantum platforms.
+    </p>
+    <p class="section-text">
+      We approach this mission through a full-stack view of AI computing. Our research
+      connects computer architecture, compilers, runtime systems, and machine learning
+      systems to remove the bottlenecks that hold modern AI back: distributed memory and
+      data movement across multi-GPU systems, irregularity in graph and foundation-model
+      workloads, latency and energy limits on edge devices, and the software barriers
+      that prevent new computing substrates from becoming practical. By co-designing
+      across these layers, we aim to turn hardware complexity into usable performance.
+    </p>
+    <p class="section-text">
+      Our long-term goal is to help define what AI computing systems should look like in
+      the next decade. We envision platforms where large models can be trained and served
+      with far less waste, where intelligence can move fluidly between cloud clusters and
+      personal devices, and where quantum-classical systems can become practical
+      accelerators rather than isolated experiments. Through this work, we aim to make
+      the future AI computing stack not only faster, but also more adaptive, dependable,
+      and capable of supporting ideas that today's systems cannot yet realize.
+    </p>
   </section>
 
-  <!-- ── Recruitment Notice ─────────────────────────────── -->
-  <div class="alert">
-    <strong>Prospective Students:</strong> I am looking for 2&ndash;3 self-motivated students to join my research group
-    in Fall 2026. Potential research topics include: (i)&nbsp;multi-GPU infrastructure for LLMs,
-    (ii)&nbsp;software&ndash;hardware co-design for edge AI, and (iii)&nbsp;fault-tolerant quantum compilers and systems.
-    If you are interested, please send me a brief email along with your CV.
+
+
+  <!-- ClustrMaps tracking (invisible, accumulating visitors) -->
+  <div style="display:none;">
+    <script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=23UyLzuJlG8DcNkyAeWUMVYlXbQUmyIn3rEdC1QizvI&cl=ffffff&w=a"></script>
   </div>
 
-  <!-- ── Recent News ─────────────────────────────────────── -->
+  <!-- Uncomment below to show the visitor map section when ready
   <section class="section">
-    <h2 class="section-title">Recent News</h2>
-    <ul class="news-list">
-      <li>
-        <span class="news-date">02/2026</span>
-        <span class="news-text">One paper accepted at CVPR 2026.</span>
-      </li>
-      <li>
-        <span class="news-date">02/2026</span>
-        <span class="news-text">Serving as ASPLOS 2026 General Co-Chair with
-          <a href="https://sites.psu.edu/vijaykrishnannarayanan/" target="_blank">Dr. Vijaykrishnan Narayanan</a> from Penn State.</span>
-      </li>
-      <li>
-        <span class="news-date">11/2025</span>
-        <span class="news-text">Collaborating with URI Physics, CMU, PQI, and Pitt Physics on a $5M quantum project. Thanks to NSF.
-          (<a href="https://www.cs.pitt.edu/news/sci-faculty-member-participating-5-million-nsf-grant-improve-qubits-and-address-quantum" target="_blank">Pitt News</a>)</span>
-      </li>
-      <li>
-        <span class="news-date">05/2025</span>
-        <span class="news-text">Promoted to Associate Professor with Tenure from Sep 1st 2025 :-)</span>
-      </li>
-      <li>
-        <span class="news-date">06/2025</span>
-        <span class="news-text">One paper accepted at ICCAD 2025.</span>
-      </li>
-      <li>
-        <span class="news-date">05/2025</span>
-        <span class="news-text">One paper accepted at ICML 2025.</span>
-      </li>
-      <li>
-        <span class="news-date">04/2025</span>
-        <span class="news-text">Congrats to <strong><a href="https://libingyao.github.io/" target="_blank">Bingyao Li</a></strong>,
-          who will join CSE@UCRiverside as a Tenure-Track Assistant Professor!</span>
-      </li>
-      <li>
-        <span class="news-date">04/2025</span>
-        <span class="news-text">Congrats to <strong><a href="https://yud42.github.io/" target="_blank">Yue Dai</a></strong>,
-          who will join CS@IIT as a Tenure-Track Assistant Professor!</span>
-      </li>
-    </ul>
-
-    <!-- Older news kept as comments:
-    04/2025. One paper accepted ICS 2025.
-    03/2025. One paper accepted ISCA 2025.
-    02/2025. One paper accepted MLSys 2025.
-    01/2025. Two papers accepted ASPLOS 2025.
-    01/2025. One paper accepted ICLR 2025.
-    11/2024. One paper accepted HPCA 2025.
-    09/2024. Serving IEEE Micro Top Picks 2025 vice program chair.
-    07/2024. Serving ASPLOS 2025 publication chair.
-    07/2024. One paper accepted MICRO 2024.
-    05/2024. Two papers accepted ASPLOS 2024 (will be presented at ASPLOS 2025).
-    02/2024. Our project on secure recommendation system has been funded by NSF.
-    02/2024. Two papers accepted DAC 2024.
-    01/2024. One paper accepted ICLR 2024.
-    10/2023. One paper accepted HPCA 2024.
-    09/2023. One paper accepted ICCD 2023.
-    08/2023. NSF funding received on efficient online learning.
-    07/2023. Two papers accepted MICRO 2023.
-    02/2023. Three papers accepted DAC 2023.
-    01/2023. One paper accepted as Spotlight at ICLR 2023.
-    10/2022. Three papers accepted HPCA 2023.
-    10/2022. One paper accepted NeurIPS 2022.
-    09/2022. One paper accepted ECCV 2022.
-    09/2022. One paper accepted ICCAD 2022.
-    09/2022. One paper accepted ICCD 2022.
-    10/2021. One paper accepted HPCA 2022.
-    07/2021. One paper accepted MICRO 2021.
-    07/2021. Two papers accepted ICCAD 2021.
-    07/2021. One paper accepted CODES+ISSS 2021.
-    03/2021. One paper accepted SIGMETRICS 2021.
-    03/2021. One paper accepted RTAS 2021.
-    03/2021. Four DAC-WIP short papers.
-    02/2021. Two papers accepted PLDI 2021.
-    02/2021. One paper accepted WWW 2021 workshop.
-    02/2021. Serving as MICRO 2021 PC member.
-    12/2020. One paper accepted AAAI 2021.
-    11/2020. One paper accepted PPoPP 2021.
-    11/2020. One paper accepted NeurIPS 2020 Workshop.
-    10/2020. Serving as PLDI 2021 PC member.
-    07/2020. One paper accepted PACT 2020.
-    05/2020. NSF FoMR Award. Co-PI. Thanks NSF and Intel!
-    05/2020. One paper accepted EMSOFT 2020.
-    -->
-  </section>
-
-  <!-- ── Current PhD Students ───────────────────────────── -->
-  <section class="section">
-    <h2 class="section-title">Current PhD Students</h2>
-    <div class="card-grid">
-      <div class="student-card">
-        <div><a href="https://shengli99.github.io/" target="_blank">Sheng Li</a></div>
-        <div class="card-role">Ph.D. Candidate</div>
-      </div>
-      <div class="student-card">
-        <div><a href="https://yueqiwang42.github.io/" target="_blank">Yueqi Wang</a></div>
-        <div class="card-role">Ph.D. Candidate</div>
-      </div>
-      <div class="student-card">
-        <div><a href="https://pittyhl.github.io/" target="_blank">Yingheng Li</a></div>
-        <div class="card-role">Ph.D. Candidate</div>
-      </div>
-      <div class="student-card">
-        <div><strong>Haoqing Yang</strong></div>
-        <div class="card-role">Ph.D. Candidate</div>
-      </div>
+    <h2 class="section-title">Visitors</h2>
+    <div class="visitor-map">
+      <script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=23UyLzuJlG8DcNkyAeWUMVYlXbQUmyIn3rEdC1QizvI&cl=ffffff&w=a"></script>
     </div>
   </section>
-
-  <!-- ── Alumni ──────────────────────────────────────────── -->
-  <section class="section">
-    <h2 class="section-title">Alumni</h2>
-    <div class="alumni-grid">
-      <div class="alumni-card">
-        <div><a href="https://libingyao.github.io/" target="_blank">Bingyao Li</a></div>
-        <div class="card-role">Ph.D. Candidate</div>
-        <div class="card-note">&rarr; TTAP, CSE@UCRiverside</div>
-      </div>
-      <div class="alumni-card">
-        <div><a href="https://yud42.github.io/" target="_blank">Yue Dai</a></div>
-        <div class="card-role">Ph.D. Candidate</div>
-        <div class="card-note">co-advised w/ <a href="https://people.cs.pitt.edu/~zhangyt/" target="_blank">Dr. Youtao Zhang</a> &middot; &rarr; TTAP, CS@IIT</div>
-      </div>
-      <div class="alumni-card">
-        <div><a href="https://getianao.github.io/" target="_blank">Tianao Ge</a></div>
-        <div class="card-role">Visiting Scholar (HKUST GZ)</div>
-        <div class="card-note">Advisor: <a href="https://www.liuhongyuan.com/" target="_blank">Dr. Hongyuan Liu</a></div>
-      </div>
-      <div class="alumni-card">
-        <div><a href="https://mehrnoosh.net/" target="_blank">Mehrnoosh Raoufi</a></div>
-        <div class="card-role">Ph.D., co-advised w/ Dr. Youtao Zhang</div>
-        <div class="card-note">&rarr; Oracle</div>
-      </div>
-      <div class="alumni-card">
-        <div><strong>Zhongxuan Song</strong></div>
-        <div class="card-role">Master</div>
-      </div>
-      <div class="alumni-card">
-        <div><strong>Weizheng Xu</strong></div>
-        <div class="card-role">Master</div>
-      </div>
-      <div class="alumni-card">
-        <div><strong>Zachary Michael Smith</strong></div>
-        <div class="card-role">Master</div>
-      </div>
-      <div class="alumni-card">
-        <div><strong>Thomas Matthew Dicarlo</strong></div>
-        <div class="card-role">Master</div>
-      </div>
-      <div class="alumni-card">
-        <div><strong>Antony Paul</strong></div>
-        <div class="card-role">Master</div>
-      </div>
-      <div class="alumni-card">
-        <div><strong>Yuan Yao</strong></div>
-        <div class="card-role">Master</div>
-        <div class="card-note">&rarr; Bloomberg LP</div>
-      </div>
-      <div class="alumni-card">
-        <div><strong>Ziyu Zhang</strong></div>
-        <div class="card-role">Master</div>
-        <div class="card-note">&rarr; Apple</div>
-      </div>
-      <div class="alumni-card">
-        <div><strong>Yilun Zhao</strong></div>
-        <div class="card-role">Ph.D. Candidate</div>
-        <div class="card-note">&rarr; Ph.D.@ICT-CAS</div>
-      </div>
-      <div class="alumni-card">
-        <div><strong>Qi Xue</strong></div>
-        <div class="card-role">Undergrad</div>
-        <div class="card-note">&rarr; MS@UPenn</div>
-      </div>
-    </div>
-  </section>
+  -->
 
 </div><!-- .container -->
 </main>
@@ -256,20 +97,30 @@
 <!-- ── Footer ──────────────────────────────────────────────── -->
 <footer class="site-footer">
   <div class="container">
-    <p>Updated 11/2025 &nbsp;&middot;&nbsp; Xulong Tang, University of Pittsburgh</p>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <img src="./index_files/pitt-seal.png" alt="University of Pittsburgh" class="footer-logo">
+      </div>
+      <div class="footer-info">
+        <p class="footer-lab-name">TANG Lab</p>
+        <p class="footer-address">Department of Computer Science, University of Pittsburgh</p>
+        <p class="footer-address">210 S. Bouquet Street, SENSQ 6514, Pittsburgh, PA 15213</p>
+      </div>
+    </div>
   </div>
-  <!-- Start of StatCounter Code for Default Guide -->
-  <script type="text/javascript">
-  var sc_project=11124835;
-  var sc_invisible=1;
-  var sc_security="85cac25a";
-  var scJsHost = (("https:" == document.location.protocol) ? "https://secure." : "http://www.");
-  document.write("<sc"+"ript type='text/javascript' src='" + scJsHost + "statcounter.com/counter/counter.js'></"+"script>");
-  </script>
-  <noscript><div class="statcounter"><a title="shopify analytics tool" href="http://statcounter.com/shopify/" target="_blank"><img class="statcounter" src="//c.statcounter.com/11124835/0/85cac25a/1/" alt="shopify analytics tool"></a></div></noscript>
-  <!-- End of StatCounter Code for Default Guide -->
 </footer>
 
 <script src="./js/nav.js"></script>
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript">
+var sc_project=11124835;
+var sc_invisible=1;
+var sc_security="85cac25a";
+var scJsHost = (("https:" == document.location.protocol) ? "https://secure." : "http://www.");
+document.write("<sc"+"ript type='text/javascript' src='" + scJsHost + "statcounter.com/counter/counter.js'></"+"script>");
+</script>
+<noscript><div class="statcounter"><a title="web analytics" href="http://statcounter.com/" target="_blank"><img class="statcounter" src="//c.statcounter.com/11124835/0/85cac25a/1/" alt="web analytics"></a></div></noscript>
+<!-- End of StatCounter Code -->
 </body>
 </html>
