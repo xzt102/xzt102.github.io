@@ -328,11 +328,13 @@ a:hover { text-decoration: underline; }
   background-image: url('../index_files/banner-inner.jpg');
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   padding-left: calc((100% - var(--max-width)) / 2 + 1.5rem);
+  overflow: hidden;
 }
 
 .page-banner.banner-people { background-image: url('../index_files/banner-people.jpg'); }
@@ -884,13 +886,8 @@ a:hover { text-decoration: underline; }
   .nav-links a.active { border-bottom: none; border-left: 3px solid var(--color-accent); padding-left: 0.75rem; border-radius: 0; }
 
   .page-banner {
-    height: auto;
-    min-height: 120px;
-    padding: 2rem 1.5rem;
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: scroll;
+    height: 160px;
+    padding-left: 1.5rem;
   }
   .page-banner h1 { font-size: 1.6rem; }
 
@@ -912,7 +909,7 @@ a:hover { text-decoration: underline; }
 }
 
 @media (max-width: 480px) {
-  .page-banner { min-height: 100px; padding: 1.5rem 1rem; }
+  .page-banner { height: 120px; padding-left: 1rem; }
   .page-banner h1 { font-size: 1.3rem; }
   .lab-hero-title { font-size: 1.5rem; }
   .people-grid { grid-template-columns: 1fr 1fr; }
