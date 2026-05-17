@@ -792,12 +792,9 @@ a:hover { text-decoration: underline; }
 }
 
 .course-code {
-  font-family: 'Courier New', monospace;
-  font-size: 0.85rem;
   font-weight: 700;
   color: var(--color-accent);
   white-space: nowrap;
-  padding-top: 0.05rem;
 }
 .course-desc {
   font-size: 0.9rem;
