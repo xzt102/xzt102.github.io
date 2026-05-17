@@ -190,7 +190,7 @@ a:hover { text-decoration: underline; }
   font-size: 0.97rem;
   line-height: 1.75;
   margin-bottom: 1.5rem;
-  text-align: justify;
+  text-align: left;
 }
 
 /* ── Research Layout: figure center, boxes on sides ───── */
