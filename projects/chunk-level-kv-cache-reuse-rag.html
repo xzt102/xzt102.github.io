@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chunk-Level KV Cache Reuse for Efficient RAG Serving</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --ink: #17202a;
+      --muted: #5f6b7a;
+      --line: #dce3ec;
+      --soft: #f7faff;
+      --blue: #2363c5;
+      --blue-dark: #153f82;
+      --shadow: 0 14px 35px rgba(31,47,70,.10);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: var(--ink); background: var(--bg); line-height: 1.65; }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { width: min(1100px, calc(100% - 40px)); margin: 0 auto; }
+    .hero { padding: 70px 0 56px; background: linear-gradient(180deg,#eef5ff 0%,#fff 100%); border-bottom: 1px solid var(--line); text-align: center; }
+    .venue { display: inline-block; padding: 6px 14px; border-radius: 999px; background: #fff; color: var(--blue-dark); font-weight: 800; font-size: 14px; border: 1px solid var(--line); box-shadow: 0 6px 18px rgba(31,47,70,.06); margin-bottom: 16px; }
+    h1 { margin: 0 auto 14px; max-width: 940px; font-size: clamp(36px,5vw,58px); line-height: 1.08; letter-spacing: -.035em; }
+    h2 { margin: 0 0 18px; font-size: clamp(22px,3vw,30px); letter-spacing: -.02em; }
+    .authors { margin: 8px 0 0; font-size: 18px; font-weight: 650; }
+    .affiliations { margin: 4px 0 0; color: var(--muted); }
+    .note { max-width: 820px; margin: 20px auto 0; color: var(--muted); font-size: 17px; }
+    .buttons { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+    .btn { display: inline-flex; align-items: center; min-height: 42px; padding: 9px 18px; border-radius: 999px; border: 1px solid var(--line); background: #fff; color: var(--ink); font-weight: 800; box-shadow: 0 8px 18px rgba(31,47,70,.07); transition: transform .15s,box-shadow .15s; }
+    .btn:hover { transform: translateY(-1px); text-decoration: none; box-shadow: var(--shadow); }
+    .btn.primary { background: var(--blue); color: #fff; border-color: var(--blue); }
+    main section { padding: 46px 0; border-bottom: 1px solid var(--line); }
+    p { margin: 0 0 14px; }
+    .caption { color: var(--muted); text-align: center; margin: 12px auto 0; max-width: 860px; font-size: 13.5px; }
+    .card { background: #fff; border: 1px solid var(--line); border-radius: 22px; padding: 22px; box-shadow: 0 10px 28px rgba(31,47,70,.07); }
+    .card strong { display: block; font-size: 17px; margin-bottom: 6px; }
+    .card p:last-child { margin-bottom: 0; }
+    .kicker { display: inline-block; color: var(--blue-dark); background: #eef5ff; border: 1px solid #d8e7ff; border-radius: 999px; padding: 3px 10px; font-size: 12px; font-weight: 850; margin-bottom: 10px; text-transform: uppercase; letter-spacing: .04em; }
+    .grid-two { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .pipeline { display: grid; grid-template-columns: repeat(5,1fr); gap: 10px; margin: 24px 0 28px; }
+    .step { min-height: 76px; border: 1px solid var(--line); border-radius: 14px; background: var(--soft); display: flex; align-items: center; justify-content: center; text-align: center; font-weight: 800; font-size: 13px; box-shadow: 0 6px 16px rgba(31,47,70,.06); padding: 8px; }
+    .results { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 22px; }
+    .metric { background: var(--soft); border: 1px solid var(--line); border-radius: 22px; padding: 22px 14px; text-align: center; }
+    .metric b { display: block; font-size: 32px; line-height: 1; letter-spacing: -.03em; color: var(--blue-dark); }
+    .metric span { display: block; margin-top: 8px; color: var(--muted); font-weight: 700; font-size: 14px; }
+    /* Observations */
+    .obs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; margin-bottom: 48px; }
+    .obs-grid:last-child { margin-bottom: 0; }
+    .obs-num { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: var(--blue); color: #fff; font-size: 14px; font-weight: 900; margin-right: 10px; flex-shrink: 0; }
+    .obs-header { display: flex; align-items: center; margin-bottom: 10px; }
+    .obs-title { font-size: 17px; font-weight: 800; }
+    .obs-body { color: var(--muted); font-size: 14px; line-height: 1.65; margin-bottom: 12px; }
+    .obs-callout { background: #eef5ff; border-left: 3px solid var(--blue); border-radius: 0 10px 10px 0; padding: 10px 14px; font-size: 13px; font-weight: 700; color: var(--blue-dark); line-height: 1.5; }
+    .fig-wrap { background: var(--soft); border: 1px solid var(--line); border-radius: 18px; padding: 16px 18px 12px; box-shadow: 0 8px 22px rgba(31,47,70,.07); }
+    .fig-wrap svg { display: block; width: 100%; }
+    .fig-caption { text-align: center; font-size: 12px; color: var(--muted); margin-top: 8px; }
+    .design-fig { background: var(--soft); border: 1px solid var(--line); border-radius: 18px; padding: 18px; box-shadow: 0 8px 22px rgba(31,47,70,.07); margin: 28px 0 10px; }
+    .design-fig svg { display: block; width: 100%; }
+    pre { overflow-x: auto; background: #0f172a; color: #e5e7eb; padding: 22px; border-radius: 18px; font-size: 14px; line-height: 1.45; }
+    .footer { padding: 34px 0 44px; color: var(--muted); text-align: center; }
+    @media (max-width: 780px) {
+      .grid-two, .obs-grid, .results { grid-template-columns: 1fr; }
+      .pipeline { grid-template-columns: repeat(3,1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="container">
+    <div class="venue">Under Review · 2026</div>
+    <h1>Chunk-Level KV Cache Reuse for Efficient RAG Serving</h1>
+    <!-- <p class="authors">Yueqi Wang · Bingyao Li · Mohamed Tarek Ibn Ziad · Lieven Eeckhout · Jun Yang · Aamer Jaleel · Xulong Tang</p>
+    <p class="affiliations">University of Pittsburgh · Ghent University · NVIDIA</p> -->
+    <p class="note">A serving-system approach that restructures retrieved chunks to unlock direct prefix-cache reuse in retrieval-augmented generation.</p>
+    <div class="buttons">
+      <a class="btn primary" href="https://yueqiwang42.github.io/assets/pdf/papers/craft.pdf">Paper</a>
+      <a class="btn" href="#abstract">Abstract</a>
+      <a class="btn" href="#observations">Observations</a>
+      <a class="btn" href="#design">Design</a>
+      <a class="btn" href="#citation">BibTeX</a>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- Teaser -->
+  <section style="padding-top:42px;">
+    <svg viewBox="0 0 1060 360" width="100%" style="display:block;border-radius:20px;" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#2363c5"/></marker>
+        <filter id="sh"><feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#1f2f46" flood-opacity=".09"/></filter>
+      </defs>
+      <rect width="1060" height="360" rx="20" fill="#f7faff" stroke="#dce3ec"/>
+      <text x="530" y="48" text-anchor="middle" font-size="21" font-weight="800" fill="#16202a" font-family="system-ui,sans-serif">High Chunk Overlap → Weak Prefix Overlap</text>
+      <text x="530" y="72" text-anchor="middle" font-size="13.5" fill="#5f6b7a" font-family="system-ui,sans-serif">Our proposed design reorders retrieved chunks so existing prefix caching can reuse KV directly.</text>
+      <!-- Left -->
+      <g filter="url(#sh)">
+        <rect x="55" y="100" width="330" height="200" rx="14" fill="#fff" stroke="#dce3ec"/>
+        <text x="220" y="126" text-anchor="middle" font-size="14" font-weight="800" fill="#16202a" font-family="system-ui,sans-serif">Original RAG Requests</text>
+        <text x="73" y="162" font-size="11.5" fill="#5f6b7a" font-family="system-ui,sans-serif">Req 1:</text>
+        <rect x="110" y="148" width="38" height="24" rx="6" fill="#dbeafe"/><text x="129" y="164" text-anchor="middle" font-size="12" font-weight="700" fill="#1e40af" font-family="system-ui,sans-serif">C7</text>
+        <rect x="153" y="148" width="38" height="24" rx="6" fill="#e0e7ff"/><text x="172" y="164" text-anchor="middle" font-size="12" font-weight="700" fill="#3730a3" font-family="system-ui,sans-serif">C9</text>
+        <rect x="196" y="148" width="38" height="24" rx="6" fill="#fee2e2"/><text x="215" y="164" text-anchor="middle" font-size="12" font-weight="700" fill="#b91c1c" font-family="system-ui,sans-serif">C5</text>
+        <rect x="239" y="148" width="38" height="24" rx="6" fill="#dcfce7"/><text x="258" y="164" text-anchor="middle" font-size="12" font-weight="700" fill="#15803d" font-family="system-ui,sans-serif">C6</text>
+        <text x="73" y="210" font-size="11.5" fill="#5f6b7a" font-family="system-ui,sans-serif">Req 2:</text>
+        <rect x="110" y="196" width="38" height="24" rx="6" fill="#fee2e2"/><text x="129" y="212" text-anchor="middle" font-size="12" font-weight="700" fill="#b91c1c" font-family="system-ui,sans-serif">C5</text>
+        <rect x="153" y="196" width="38" height="24" rx="6" fill="#dbeafe"/><text x="172" y="212" text-anchor="middle" font-size="12" font-weight="700" fill="#1e40af" font-family="system-ui,sans-serif">C7</text>
+        <rect x="196" y="196" width="38" height="24" rx="6" fill="#e0e7ff"/><text x="215" y="212" text-anchor="middle" font-size="12" font-weight="700" fill="#3730a3" font-family="system-ui,sans-serif">C9</text>
+        <rect x="239" y="196" width="38" height="24" rx="6" fill="#fef3c7"/><text x="258" y="212" text-anchor="middle" font-size="12" font-weight="700" fill="#92400e" font-family="system-ui,sans-serif">C10</text>
+        <text x="220" y="270" text-anchor="middle" font-size="12" fill="#ef4444" font-weight="700" font-family="system-ui,sans-serif">✗ No prefix match — KV recomputed</text>
+      </g>
+      <!-- Arrow -->
+      <line x1="408" y1="200" x2="580" y2="200" stroke="#2363c5" stroke-width="3" marker-end="url(#arr)"/>
+      <text x="494" y="188" text-anchor="middle" font-size="12.5" font-weight="800" fill="#153f82" font-family="system-ui,sans-serif">frequency-guided reorder</text>
+      <!-- Right -->
+      <g filter="url(#sh)">
+        <rect x="605" y="100" width="390" height="200" rx="14" fill="#fff" stroke="#dce3ec"/>
+        <text x="800" y="126" text-anchor="middle" font-size="14" font-weight="800" fill="#16202a" font-family="system-ui,sans-serif">Aligned Chunk Prefixes</text>
+        <text x="622" y="162" font-size="11.5" fill="#5f6b7a" font-family="system-ui,sans-serif">Req 1:</text>
+        <rect x="660" y="148" width="38" height="24" rx="6" fill="#dbeafe"/><text x="679" y="164" text-anchor="middle" font-size="12" font-weight="700" fill="#1e40af" font-family="system-ui,sans-serif">C7</text>
+        <rect x="703" y="148" width="38" height="24" rx="6" fill="#e0e7ff"/><text x="722" y="164" text-anchor="middle" font-size="12" font-weight="700" fill="#3730a3" font-family="system-ui,sans-serif">C9</text>
+        <rect x="746" y="148" width="38" height="24" rx="6" fill="#fee2e2"/><text x="765" y="164" text-anchor="middle" font-size="12" font-weight="700" fill="#b91c1c" font-family="system-ui,sans-serif">C5</text>
+        <rect x="789" y="148" width="38" height="24" rx="6" fill="#dcfce7"/><text x="808" y="164" text-anchor="middle" font-size="12" font-weight="700" fill="#15803d" font-family="system-ui,sans-serif">C6</text>
+        <text x="622" y="210" font-size="11.5" fill="#5f6b7a" font-family="system-ui,sans-serif">Req 2:</text>
+        <rect x="660" y="196" width="38" height="24" rx="6" fill="#dbeafe"/><text x="679" y="212" text-anchor="middle" font-size="12" font-weight="700" fill="#1e40af" font-family="system-ui,sans-serif">C7</text>
+        <rect x="703" y="196" width="38" height="24" rx="6" fill="#e0e7ff"/><text x="722" y="212" text-anchor="middle" font-size="12" font-weight="700" fill="#3730a3" font-family="system-ui,sans-serif">C9</text>
+        <rect x="746" y="196" width="38" height="24" rx="6" fill="#fee2e2"/><text x="765" y="212" text-anchor="middle" font-size="12" font-weight="700" fill="#b91c1c" font-family="system-ui,sans-serif">C5</text>
+        <rect x="789" y="196" width="38" height="24" rx="6" fill="#fef3c7"/><text x="808" y="212" text-anchor="middle" font-size="12" font-weight="700" fill="#92400e" font-family="system-ui,sans-serif">C10</text>
+        <!-- Shared prefix dashed box -->
+        <rect x="657" y="142" width="172" height="84" rx="8" fill="none" stroke="#2363c5" stroke-width="2" stroke-dasharray="6 4"/>
+        <text x="743" y="136" text-anchor="middle" font-size="10.5" fill="#2363c5" font-weight="700" font-family="system-ui,sans-serif">shared prefix → KV reused</text>
+        <text x="800" y="270" text-anchor="middle" font-size="12" fill="#16a34a" font-weight="700" font-family="system-ui,sans-serif">✓ Shared prefix — KV reused directly</text>
+      </g>
+    </svg>
+    <p class="caption">Our method converts position-independent chunk overlap into prefix-aligned KV reuse without modifying the prefix-cache mechanism.</p>
+  </section>
+
+  <!-- Abstract -->
+  <section id="abstract">
+    <h2>Abstract</h2>
+    <p>Retrieval-augmented generation improves answer quality by adding external documents to the prompt, but the retrieved context increases prefill cost, GPU memory pressure, and time-to-first-token. Although many RAG requests retrieve overlapping document chunks, standard prefix caching can only reuse KV cache when the token prefix is identical—reuse opportunities are lost when the same chunks appear in different positions.</p>
+    <p>We observe that retrieved chunks are typically semantically self-contained, making chunk order a systems-level optimization variable. It reorders chunks using recent access-frequency statistics, places commonly shared chunks earlier in the prompt, indexes reusable chunk-prefix KV in a CP-Tree, and removes redundant chunks across turns in a conversation. Implemented on vLLM, our proposed design improves TTFT by 1.2–1.6× across evaluated workloads without measurable degradation in response quality.</p>
+  </section>
+
+  <!-- Observations -->
+  <section id="observations">
+    <h2>Key Observations</h2>
+
+    <!-- Obs 1 -->
+    <div class="obs-grid">
+      <div>
+        <div class="obs-header">
+          <span class="obs-num">1</span>
+          <span class="obs-title">High Redundancy, Low Prefix Reuse</span>
+        </div>
+        <p class="obs-body">Across realistic RAG workloads, <strong>43%</strong> of retrieved chunks are shared with prior requests, yet only <strong>11%</strong> are prefix-aligned and reusable under standard prefix caching. The gap is not from lack of overlap, but from positional misalignment that prevents exploitation of it.</p>
+        <div class="obs-callout">Chunk redundancy across requests is high, but prefix-aligned chunk-KV reuse is limited due to positional misalignment.</div>
+      </div>
+      <div class="fig-wrap">
+        <svg viewBox="0 0 400 210" xmlns="http://www.w3.org/2000/svg">
+          <line x1="55" y1="165" x2="385" y2="165" stroke="#cbd5e1" stroke-width="1.5"/>
+          <line x1="55" y1="20"  x2="55"  y2="165" stroke="#cbd5e1" stroke-width="1.5"/>
+          <text x="46" y="168" text-anchor="end" font-size="10" fill="#5f6b7a" font-family="system-ui,sans-serif">0%</text>
+          <text x="46" y="112" text-anchor="end" font-size="10" fill="#5f6b7a" font-family="system-ui,sans-serif">25%</text>
+          <text x="46" y="57"  text-anchor="end" font-size="10" fill="#5f6b7a" font-family="system-ui,sans-serif">50%</text>
+          <line x1="55" y1="112" x2="385" y2="112" stroke="#e8eef5" stroke-width="1" stroke-dasharray="4 3"/>
+          <line x1="55" y1="57"  x2="385" y2="57"  stroke="#e8eef5" stroke-width="1" stroke-dasharray="4 3"/>
+          <text x="14" y="97" text-anchor="middle" font-size="10" fill="#5f6b7a" font-family="system-ui,sans-serif" transform="rotate(-90,14,97)">Percentage</text>
+          <!-- Groups: HotpotQA prefix~9%=25px, total~42%=118px; 2Wiki p~8%=22px t~38%=107px; SQuAD p~14%=39px t~47%=132px; TriviaQA p~11%=31px t~44%=124px; Ave p~11%=31 t~43%=121 -->
+          <!-- HotpotQA -->
+          <rect x="72"  y="140" width="16" height="25"  fill="#2363c5" rx="2"/>
+          <rect x="90"  y="47"  width="16" height="118" fill="#93c5fd" rx="2"/>
+          <text x="90" y="180" text-anchor="middle" font-size="9.5" fill="#5f6b7a" font-family="system-ui,sans-serif">HotpotQA</text>
+          <!-- 2WikiMQA -->
+          <rect x="140" y="143" width="16" height="22"  fill="#2363c5" rx="2"/>
+          <rect x="158" y="58"  width="16" height="107" fill="#93c5fd" rx="2"/>
+          <text x="157" y="180" text-anchor="middle" font-size="9.5" fill="#5f6b7a" font-family="system-ui,sans-serif">2WikiMQA</text>
+          <!-- SQuAD -->
+          <rect x="208" y="126" width="16" height="39"  fill="#2363c5" rx="2"/>
+          <rect x="226" y="33"  width="16" height="132" fill="#93c5fd" rx="2"/>
+          <text x="225" y="180" text-anchor="middle" font-size="9.5" fill="#5f6b7a" font-family="system-ui,sans-serif">SQuAD</text>
+          <!-- TriviaQA -->
+          <rect x="276" y="134" width="16" height="31"  fill="#2363c5" rx="2"/>
+          <rect x="294" y="44"  width="16" height="121" fill="#93c5fd" rx="2"/>
+          <text x="293" y="180" text-anchor="middle" font-size="9.5" fill="#5f6b7a" font-family="system-ui,sans-serif">TriviaQA</text>
+          <!-- Ave -->
+          <rect x="344" y="134" width="16" height="31"  fill="#2363c5" rx="2"/>
+          <rect x="362" y="44"  width="16" height="121" fill="#93c5fd" rx="2"/>
+          <text x="361" y="180" text-anchor="middle" font-size="9.5" fill="#5f6b7a" font-family="system-ui,sans-serif">Ave.</text>
+          <!-- Legend -->
+          <rect x="90"  y="193" width="11" height="11" fill="#2363c5" rx="2"/>
+          <text x="104" y="202" font-size="10" fill="#17202a" font-family="system-ui,sans-serif">Prefix (11%)</text>
+          <rect x="205" y="193" width="11" height="11" fill="#93c5fd" rx="2"/>
+          <text x="219" y="202" font-size="10" fill="#17202a" font-family="system-ui,sans-serif">Total (43%)</text>
+        </svg>
+        <div class="fig-caption">Chunk overlap across requests: prefix-aligned vs. total shared.</div>
+      </div>
+    </div>
+
+    <!-- Obs 2 -->
+    <div class="obs-grid">
+      <div class="fig-wrap">
+  <svg viewBox="0 0 400 210" xmlns="http://www.w3.org/2000/svg">
+    <line x1="55" y1="165" x2="385" y2="165" stroke="#cbd5e1" stroke-width="1.5"/>
+    <line x1="55" y1="20" x2="55" y2="165" stroke="#cbd5e1" stroke-width="1.5"/>
+
+    <text x="46" y="168" text-anchor="end" font-size="10" fill="#5f6b7a" font-family="system-ui,sans-serif">0.5</text>
+    <text x="46" y="95" text-anchor="end" font-size="10" fill="#5f6b7a" font-family="system-ui,sans-serif">0.75</text>
+    <text x="46" y="23" text-anchor="end" font-size="10" fill="#5f6b7a" font-family="system-ui,sans-serif">1.0</text>
+
+    <line x1="55" y1="95" x2="385" y2="95" stroke="#e8eef5" stroke-width="1" stroke-dasharray="4 3"/>
+
+    <text x="220" y="195" text-anchor="middle" font-size="10" fill="#5f6b7a" font-family="system-ui,sans-serif">Request ID (0–18)</text>
+    <text x="14" y="97" text-anchor="middle" font-size="10" fill="#5f6b7a" font-family="system-ui,sans-serif" transform="rotate(-90,14,97)">BERTScore</text>
+
+    <!-- std band -->
+    <polygon points="
+    55,58 72,54 89,60 106,53 123,58 140,55 157,61 174,54 191,58 208,52
+    225,57 242,59 259,55 276,60 293,56 310,54 327,59 344,56 361,53 378,58
+    378,68 361,63 344,66 327,69 310,64 293,66 276,70 259,65 242,69 225,67
+    208,62 191,68 174,64 157,71 140,65 123,68 106,63 89,70 72,64 55,68"
+    fill="#fdba74" fill-opacity="0.3"/>
+
+    <!-- random mean dashed -->
+    <polyline points="
+    55,63 72,59 89,65 106,58 123,63 140,60 157,66 174,59 191,63 208,57
+    225,62 242,64 259,60 276,65 293,61 310,59 327,64 344,61 361,58 378,63"
+    fill="none" stroke="#f97316" stroke-width="2" stroke-dasharray="6 4"/>
+
+    <!-- baseline solid -->
+    <polyline points="
+    55,63 72,59 89,65 106,58 123,63 140,60 157,66 174,59 191,63 208,57
+    225,62 242,64 259,60 276,65 293,61 310,59 327,64 344,61 361,58 378,63"
+    fill="none" stroke="#2363c5" stroke-width="2.5"/>
+
+    <!-- Legend -->
+    <line x1="80" y1="207" x2="100" y2="207" stroke="#2363c5" stroke-width="2.5"/>
+    <text x="104" y="211" font-size="10" fill="#17202a" font-family="system-ui,sans-serif">Baseline</text>
+
+    <line x1="195" y1="207" x2="215" y2="207" stroke="#f97316" stroke-width="2" stroke-dasharray="5 3"/>
+    <text x="219" y="211" font-size="10" fill="#17202a" font-family="system-ui,sans-serif">Random (mean±std)</text>
+  </svg>
+
+  <div class="fig-caption">BERTScore: baseline order vs. 100 random permutations. Lines overlap closely across all models.</div>
+</div>
+      <div>
+        <div class="obs-header">
+          <span class="obs-num">2</span>
+          <span class="obs-title">Chunk Order Doesn't Affect Quality</span>
+        </div>
+        <p class="obs-body">Each retrieved chunk (128–512 tokens) is semantically self-contained. Experiments across LLaMA-3-8B, Mistral-7B, and Qwen-7B show negligible BERTScore and F1 change over 100 random chunk permutations—making chunk order a free optimization variable.</p>
+        <div class="obs-callout">Chunk order has negligible impact on generation quality when chunks are semantically self-contained (128–512 tokens per chunk).</div>
+      </div>
+    </div>
+
+    <!-- Obs 3 -->
+    <div class="obs-grid">
+      <div>
+        <div class="obs-header">
+          <span class="obs-num">3</span>
+          <span class="obs-title">Multi-Turn RAG Amplifies Redundancy</span>
+        </div>
+        <p class="obs-body">In multi-turn conversations, <strong>21%</strong> of chunks per turn already appeared in an earlier turn and are needlessly recomputed. Removing these duplicates causes no statistically significant quality drop (paired t-test, p = 0.47), providing a free efficiency gain.</p>
+        <div class="obs-callout">In multi-turn RAG, repeated chunk retrieval leads to redundant KV computation that can be eliminated without affecting generation quality.</div>
+      </div>
+      <div class="fig-wrap">
+        <svg viewBox="0 0 400 230" xmlns="http://www.w3.org/2000/svg">
+          <!-- Turn diagram -->
+          <text x="10" y="22" font-size="11" font-weight="700" fill="#17202a" font-family="system-ui,sans-serif">Turn 1</text>
+          <rect x="58"  y="8"  width="32" height="20" rx="5" fill="#dbeafe"/><text x="74"  y="22" text-anchor="middle" font-size="10.5" font-weight="700" fill="#1e40af" font-family="system-ui,sans-serif">C1</text>
+          <rect x="94"  y="8"  width="32" height="20" rx="5" fill="#fee2e2"/><text x="110" y="22" text-anchor="middle" font-size="10.5" font-weight="700" fill="#b91c1c" font-family="system-ui,sans-serif">C2</text>
+          <rect x="130" y="8"  width="32" height="20" rx="5" fill="#dcfce7"/><text x="146" y="22" text-anchor="middle" font-size="10.5" font-weight="700" fill="#15803d" font-family="system-ui,sans-serif">C3</text>
+          <rect x="170" y="8"  width="32" height="20" rx="5" fill="#f1f5f9"/><text x="186" y="22" text-anchor="middle" font-size="10.5" font-weight="700" fill="#475569" font-family="system-ui,sans-serif">Q1</text>
+          <rect x="206" y="8"  width="32" height="20" rx="5" fill="#f1f5f9"/><text x="222" y="22" text-anchor="middle" font-size="10.5" font-weight="700" fill="#475569" font-family="system-ui,sans-serif">A1</text>
+
+          <text x="10" y="58" font-size="11" font-weight="700" fill="#17202a" font-family="system-ui,sans-serif">Turn 2</text>
+          <rect x="58"  y="44" width="32" height="20" rx="5" fill="#dbeafe"/><text x="74"  y="58" text-anchor="middle" font-size="10.5" font-weight="700" fill="#1e40af" font-family="system-ui,sans-serif">C1</text>
+          <rect x="94"  y="44" width="32" height="20" rx="5" fill="#fee2e2"/><text x="110" y="58" text-anchor="middle" font-size="10.5" font-weight="700" fill="#b91c1c" font-family="system-ui,sans-serif">C2</text>
+          <rect x="130" y="44" width="32" height="20" rx="5" fill="#fef3c7"/><text x="146" y="58" text-anchor="middle" font-size="10.5" font-weight="700" fill="#92400e" font-family="system-ui,sans-serif">C7</text>
+          <rect x="170" y="44" width="32" height="20" rx="5" fill="#f1f5f9"/><text x="186" y="58" text-anchor="middle" font-size="10.5" font-weight="700" fill="#475569" font-family="system-ui,sans-serif">Q2</text>
+          <rect x="206" y="44" width="32" height="20" rx="5" fill="#f1f5f9"/><text x="222" y="58" text-anchor="middle" font-size="10.5" font-weight="700" fill="#475569" font-family="system-ui,sans-serif">A2</text>
+
+          <!-- repeat connectors -->
+          <line x1="74"  y1="28" x2="74"  y2="44" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3 2"/>
+          <line x1="110" y1="28" x2="110" y2="44" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3 2"/>
+          <text x="92" y="40" text-anchor="middle" font-size="9.5" fill="#ef4444" font-weight="700" font-family="system-ui,sans-serif">repeated</text>
+
+          <!-- divider -->
+          <line x1="10" y1="82" x2="390" y2="82" stroke="#dce3ec" stroke-width="1" stroke-dasharray="4 3"/>
+
+          <!-- Bar chart -->
+          <text x="200" y="102" text-anchor="middle" font-size="11.5" font-weight="800" fill="#17202a" font-family="system-ui,sans-serif">Repeated chunks per turn</text>
+          <line x1="55" y1="115" x2="55"  y2="210" stroke="#cbd5e1" stroke-width="1.5"/>
+          <line x1="55" y1="210" x2="385" y2="210" stroke="#cbd5e1" stroke-width="1.5"/>
+          <text x="46" y="213" text-anchor="end" font-size="10" fill="#5f6b7a" font-family="system-ui,sans-serif">0%</text>
+          <text x="46" y="162" text-anchor="end" font-size="10" fill="#5f6b7a" font-family="system-ui,sans-serif">25%</text>
+          <text x="46" y="115" text-anchor="end" font-size="10" fill="#5f6b7a" font-family="system-ui,sans-serif">50%</text>
+          <line x1="55" y1="162" x2="385" y2="162" stroke="#e8eef5" stroke-width="1" stroke-dasharray="3 3"/>
+          <!-- MTRAG ~24% = 48px -->
+          <rect x="100" y="162" width="60" height="48" fill="#2363c5" rx="3"/>
+          <text x="130" y="157" text-anchor="middle" font-size="10" fill="#2363c5" font-weight="700" font-family="system-ui,sans-serif">24%</text>
+          <text x="130" y="226" text-anchor="middle" font-size="10" fill="#5f6b7a" font-family="system-ui,sans-serif">MTRAG</text>
+          <!-- ShareGPT ~18% = 36px -->
+          <rect x="200" y="174" width="60" height="36" fill="#93c5fd" rx="3"/>
+          <text x="230" y="169" text-anchor="middle" font-size="10" fill="#2363c5" font-weight="700" font-family="system-ui,sans-serif">18%</text>
+          <text x="230" y="226" text-anchor="middle" font-size="10" fill="#5f6b7a" font-family="system-ui,sans-serif">ShareGPT</text>
+          <!-- Ave ~21% = 42px -->
+          <rect x="300" y="168" width="60" height="42" fill="#6ea8f7" rx="3"/>
+          <text x="330" y="163" text-anchor="middle" font-size="10" fill="#2363c5" font-weight="700" font-family="system-ui,sans-serif">21%</text>
+          <text x="330" y="226" text-anchor="middle" font-size="10" fill="#5f6b7a" font-family="system-ui,sans-serif">Ave.</text>
+        </svg>
+        <div class="fig-caption">Repeated chunks across turns (top) and frequency on MTRAG/ShareGPT (bottom).</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Design -->
+  <section id="design">
+    <h2>Design</h2>
+    <div class="pipeline">
+      <div class="step">Retrieve<br/>Chunks</div>
+      <div class="step">Update<br/>CA-Table</div>
+      <div class="step">Reorder by<br/>Hotness</div>
+      <div class="step">Lookup<br/>CP-Tree</div>
+      <div class="step">Reuse KV +<br/>Suffix</div>
+    </div>
+
+
+    <div class="grid-two" style="margin-top:28px;">
+      <div class="card"><span class="kicker">Chunk-Access Table</span><strong>Recent access statistics</strong><p>Tracks chunk frequencies over a sliding window. Frequently reused chunks are promoted to earlier positions so similar requests share a common prefix.</p></div>
+      <div class="card"><span class="kicker">Chunk-Prefix Tree</span><strong>Reusable prefix metadata</strong><p>Indexes cached chunk-prefixes with KV metadata (storage location, token span). Supports longest-prefix lookup and sub-prefix reuse from longer cached paths.</p></div>
+      <div class="card"><span class="kicker">Conversation Deduplication</span><strong>Multi-turn reuse</strong><p>Removes chunks already seen in earlier turns of the same conversation, eliminating repeated KV computation for persistent context.</p></div>
+      <div class="card"><span class="kicker">Compatibility</span><strong>Built on prefix caching</strong><p>Reshapes inputs so more requests satisfy existing prefix-cache reuse conditions. Compatible with vLLM and complementary to CacheBlend.</p></div>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <section id="results">
+    <h2>Evaluation Highlights</h2>
+    <div class="results">
+      <div class="metric"><b>1.2–1.6×</b><span>TTFT speedup</span></div>
+      <div class="metric"><b>19–38%</b><span>KV computation eliminated</span></div>
+      <div class="metric"><b>No loss</b><span>measurable quality impact</span></div>
+    </div>
+    <p class="caption" style="margin-top:16px;">Evaluated on HotpotQA, 2WikiMQA, SQuAD, TriviaQA, ShareGPT, and MTRAG across LLaMA-3-8B, Mistral-7B, and Qwen2.5-7B.</p>
+  </section>
+
+  <!-- Takeaway -->
+  <section>
+    <h2>Takeaway</h2>
+    <div class="card">
+      <p>Our proposed method treats retrieved chunks as a reorderable systems abstraction. By aligning shared chunks into common prefixes and deduplicating repeated conversation context, it improves the practical effectiveness of KV prefix caching for RAG serving without requiring changes to the LLM architecture or the prefix-cache mechanism itself.</p>
+    </div>
+  </section>
+
+  <!-- Citation -->
+  <section id="citation">
+    <h2>Citation</h2>
+    <pre>To appear...</pre>
+  </section>
+
+</main>
+<footer class="footer">
+  <div class="container">TANG Lab · University of Pittsburgh</div>
+</footer>
+</body>
+</html>

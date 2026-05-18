@@ -65,7 +65,175 @@
     </div>
   </section>
 
-  <!-- ── Project: Scalable GPU and AI Hardware Systems ───── -->
+<!-- ── Featured Projects ───────────────────────────────── -->
+<section class="section">
+  <h2 class="section-title">Featured Projects</h2>
+
+  <!-- DynaPatch -->
+  <article class="featured-project">
+    <a href="https://shengli99.github.io/DynaPatch/" class="featured-project-figure">
+      <img src="./projects/img/dynapatch-visual.jpg" alt="DynaPatch generated videos with content-aware patch allocation">
+    </a>
+    <div class="featured-project-body">
+      <h3><a href="https://shengli99.github.io/DynaPatch/">DynaPatch: Content-Aware Dynamic Patchification for Efficient Video Diffusion</a></h3>
+      <p class="featured-project-desc">
+        A content-aware dynamic patchification framework for video diffusion transformers. A lightweight router predicts region-wise patch sizes from 3D VAE latents, allocating fine-grained tokens to complex motion regions while coarsening static backgrounds. Achieves <strong>1.3–1.8x inference speedup</strong> with minimal quality degradation on standard benchmarks.
+      </p>
+      <div class="project-tags">
+        <span class="tag">Video Diffusion</span>
+        <span class="tag">Dynamic Patchification</span>
+        <span class="tag">Efficient Generation</span>
+      </div>
+      <div class="featured-project-links">
+        <a href="https://shengli99.github.io/DynaPatch/" class="btn btn-sm">Project Page</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- Chunk-Level KV Cache -->
+  <article class="featured-project">
+    <a href="./projects/chunk-level-kv-cache-reuse-rag.html" class="featured-project-figure">
+      <svg viewBox="0 0 800 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="KV cache reuse overview">
+        <defs><marker id="arr1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#003594"/></marker></defs>
+        <rect width="800" height="280" rx="12" fill="#f8fafc"/>
+        <!-- Left: Original requests -->
+        <rect x="30" y="30" width="280" height="200" rx="10" fill="#fff" stroke="#e9ecef" stroke-width="1.5"/>
+        <text x="170" y="56" text-anchor="middle" font-size="13" font-weight="700" fill="#1a1a2e" font-family="system-ui">Original RAG Requests</text>
+        <text x="50" y="90" font-size="11" fill="#4a5568" font-family="system-ui">Req 1:</text>
+        <rect x="95" y="75" width="40" height="24" rx="6" fill="#e8f0fe"/><text x="115" y="92" text-anchor="middle" font-size="11" font-weight="600" fill="#003594" font-family="system-ui">C7</text>
+        <rect x="140" y="75" width="40" height="24" rx="6" fill="#ede7f6"/><text x="160" y="92" text-anchor="middle" font-size="11" font-weight="600" fill="#4527a0" font-family="system-ui">C9</text>
+        <rect x="185" y="75" width="40" height="24" rx="6" fill="#fce4ec"/><text x="205" y="92" text-anchor="middle" font-size="11" font-weight="600" fill="#b71c1c" font-family="system-ui">C5</text>
+        <rect x="230" y="75" width="40" height="24" rx="6" fill="#e8f5e9"/><text x="250" y="92" text-anchor="middle" font-size="11" font-weight="600" fill="#2e7d32" font-family="system-ui">C6</text>
+        <text x="50" y="135" font-size="11" fill="#4a5568" font-family="system-ui">Req 2:</text>
+        <rect x="95" y="120" width="40" height="24" rx="6" fill="#fce4ec"/><text x="115" y="137" text-anchor="middle" font-size="11" font-weight="600" fill="#b71c1c" font-family="system-ui">C5</text>
+        <rect x="140" y="120" width="40" height="24" rx="6" fill="#e8f0fe"/><text x="160" y="137" text-anchor="middle" font-size="11" font-weight="600" fill="#003594" font-family="system-ui">C7</text>
+        <rect x="185" y="120" width="40" height="24" rx="6" fill="#ede7f6"/><text x="205" y="137" text-anchor="middle" font-size="11" font-weight="600" fill="#4527a0" font-family="system-ui">C9</text>
+        <rect x="230" y="120" width="40" height="24" rx="6" fill="#fff3e0"/><text x="250" y="137" text-anchor="middle" font-size="11" font-weight="600" fill="#e65100" font-family="system-ui">C10</text>
+        <text x="170" y="195" text-anchor="middle" font-size="11" font-weight="600" fill="#b71c1c" font-family="system-ui">No prefix match</text>
+        <!-- Arrow -->
+        <path d="M320 130 L410 130" stroke="#003594" stroke-width="2.5" marker-end="url(#arr1)"/>
+        <text x="365" y="120" text-anchor="middle" font-size="10" font-weight="700" fill="#003594" font-family="system-ui">reorder</text>
+        <!-- Right: Aligned -->
+        <rect x="420" y="30" width="350" height="200" rx="10" fill="#fff" stroke="#2e7d32" stroke-width="1.5"/>
+        <text x="595" y="56" text-anchor="middle" font-size="13" font-weight="700" fill="#2e7d32" font-family="system-ui">Aligned Chunk Prefixes</text>
+        <text x="440" y="90" font-size="11" fill="#4a5568" font-family="system-ui">Req 1:</text>
+        <rect x="485" y="75" width="40" height="24" rx="6" fill="#e8f0fe"/><text x="505" y="92" text-anchor="middle" font-size="11" font-weight="600" fill="#003594" font-family="system-ui">C7</text>
+        <rect x="530" y="75" width="40" height="24" rx="6" fill="#ede7f6"/><text x="550" y="92" text-anchor="middle" font-size="11" font-weight="600" fill="#4527a0" font-family="system-ui">C9</text>
+        <rect x="575" y="75" width="40" height="24" rx="6" fill="#fce4ec"/><text x="595" y="92" text-anchor="middle" font-size="11" font-weight="600" fill="#b71c1c" font-family="system-ui">C5</text>
+        <rect x="620" y="75" width="40" height="24" rx="6" fill="#e8f5e9"/><text x="640" y="92" text-anchor="middle" font-size="11" font-weight="600" fill="#2e7d32" font-family="system-ui">C6</text>
+        <text x="440" y="135" font-size="11" fill="#4a5568" font-family="system-ui">Req 2:</text>
+        <rect x="485" y="120" width="40" height="24" rx="6" fill="#e8f0fe"/><text x="505" y="137" text-anchor="middle" font-size="11" font-weight="600" fill="#003594" font-family="system-ui">C7</text>
+        <rect x="530" y="120" width="40" height="24" rx="6" fill="#ede7f6"/><text x="550" y="137" text-anchor="middle" font-size="11" font-weight="600" fill="#4527a0" font-family="system-ui">C9</text>
+        <rect x="575" y="120" width="40" height="24" rx="6" fill="#fce4ec"/><text x="595" y="137" text-anchor="middle" font-size="11" font-weight="600" fill="#b71c1c" font-family="system-ui">C5</text>
+        <rect x="620" y="120" width="40" height="24" rx="6" fill="#fff3e0"/><text x="640" y="137" text-anchor="middle" font-size="11" font-weight="600" fill="#e65100" font-family="system-ui">C10</text>
+        <!-- Shared prefix highlight -->
+        <rect x="481" y="71" width="138" height="79" rx="4" fill="none" stroke="#2e7d32" stroke-width="2" stroke-dasharray="5 3"/>
+        <text x="550" y="175" text-anchor="middle" font-size="10" font-weight="600" fill="#2e7d32" font-family="system-ui">shared prefix</text>
+        <text x="595" y="195" text-anchor="middle" font-size="11" font-weight="600" fill="#2e7d32" font-family="system-ui">KV cache reused directly</text>
+        <!-- Bottom metrics -->
+        <rect x="200" y="244" width="160" height="26" rx="8" fill="#e8f0fe"/><text x="280" y="262" text-anchor="middle" font-size="11" font-weight="700" fill="#003594" font-family="system-ui">1.6x TTFT Reduction</text>
+        <rect x="400" y="244" width="160" height="26" rx="8" fill="#e8f5e9"/><text x="480" y="262" text-anchor="middle" font-size="11" font-weight="700" fill="#2e7d32" font-family="system-ui">2.2x Throughput</text>
+      </svg>
+    </a>
+    <div class="featured-project-body">
+      <h3><a href="./projects/chunk-level-kv-cache-reuse-rag.html">Chunk-Level KV Cache Reuse for Efficient RAG Serving</a></h3>
+      <p class="featured-project-desc">
+        A serving-system approach that restructures retrieved chunks to unlock direct prefix-cache reuse in RAG workloads. Frequency-guided reordering aligns chunk prefixes across requests, enabling direct KV cache hits without recomputation. Reduces <strong>time-to-first-token by up to 1.6x</strong> and improves <strong>serving throughput by up to 2.2x</strong>.
+      </p>
+      <div class="project-tags">
+        <span class="tag">LLM Serving</span>
+        <span class="tag">KV Cache</span>
+        <span class="tag">RAG</span>
+        <span class="tag">Prefix Caching</span>
+        <span class="tag">GPU Infrastructure</span>
+      </div>
+      <div class="featured-project-links">
+        <a href="./projects/chunk-level-kv-cache-reuse-rag.html" class="btn btn-sm">Project Page</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- GRIT & OASIS -->
+  <article class="featured-project">
+    <a href="./projects/grit-oasis.html" class="featured-project-figure">
+      <svg viewBox="0 0 800 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GRIT and OASIS overview">
+        <defs><marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#003594"/></marker></defs>
+        <rect width="800" height="280" rx="12" fill="#f8fafc"/>
+        <!-- UVM Policies -->
+        <rect x="30" y="40" width="160" height="180" rx="10" fill="#fff" stroke="#e9ecef" stroke-width="1.5"/>
+        <text x="110" y="66" text-anchor="middle" font-size="12" font-weight="700" fill="#1a1a2e" font-family="system-ui">UVM Policies</text>
+        <rect x="48" y="82" width="124" height="28" rx="14" fill="#e8f0fe"/><text x="110" y="101" text-anchor="middle" font-size="10" font-weight="600" fill="#003594" font-family="system-ui">On-touch migrate</text>
+        <rect x="48" y="118" width="124" height="28" rx="14" fill="#ede7f6"/><text x="110" y="137" text-anchor="middle" font-size="10" font-weight="600" fill="#4527a0" font-family="system-ui">Access counter</text>
+        <rect x="48" y="154" width="124" height="28" rx="14" fill="#e8f5e9"/><text x="110" y="173" text-anchor="middle" font-size="10" font-weight="600" fill="#2e7d32" font-family="system-ui">Page duplication</text>
+        <!-- Arrow -->
+        <path d="M198 130 L248 130" stroke="#003594" stroke-width="2.5" marker-end="url(#arr2)"/>
+        <!-- GRIT -->
+        <rect x="258" y="30" width="210" height="210" rx="10" fill="#fff" stroke="#003594" stroke-width="2"/>
+        <text x="363" y="60" text-anchor="middle" font-size="15" font-weight="800" fill="#003594" font-family="system-ui">GRIT</text>
+        <text x="363" y="80" text-anchor="middle" font-size="10" fill="#4a5568" font-family="system-ui">Fine-grained page adaptation</text>
+        <rect x="280" y="96" width="166" height="30" rx="6" fill="#f8f9fa" stroke="#e9ecef"/><text x="363" y="116" text-anchor="middle" font-size="10" font-weight="600" fill="#1a1a2e" font-family="system-ui">Fault-Aware Initiator</text>
+        <rect x="280" y="134" width="166" height="30" rx="6" fill="#f8f9fa" stroke="#e9ecef"/><text x="363" y="154" text-anchor="middle" font-size="10" font-weight="600" fill="#1a1a2e" font-family="system-ui">PA-Table + PA-Cache</text>
+        <rect x="280" y="172" width="166" height="30" rx="6" fill="#f8f9fa" stroke="#e9ecef"/><text x="363" y="192" text-anchor="middle" font-size="10" font-weight="600" fill="#1a1a2e" font-family="system-ui">Neighbor Prediction</text>
+        <!-- Arrow -->
+        <path d="M476 130 L526 130" stroke="#003594" stroke-width="2.5" marker-end="url(#arr2)"/>
+        <!-- OASIS -->
+        <rect x="536" y="30" width="230" height="210" rx="10" fill="#fff" stroke="#2e7d32" stroke-width="2"/>
+        <text x="651" y="60" text-anchor="middle" font-size="15" font-weight="800" fill="#2e7d32" font-family="system-ui">OASIS</text>
+        <text x="651" y="80" text-anchor="middle" font-size="10" fill="#4a5568" font-family="system-ui">Object-aware management</text>
+        <circle cx="651" cy="135" r="35" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.5"/>
+        <text x="651" y="140" text-anchor="middle" font-size="12" font-weight="700" fill="#2e7d32" font-family="system-ui">Object</text>
+        <rect x="586" y="185" width="130" height="30" rx="6" fill="#f8f9fa" stroke="#e9ecef"/><text x="651" y="205" text-anchor="middle" font-size="10" font-weight="600" fill="#1a1a2e" font-family="system-ui">O-Table Tracking</text>
+        <!-- Bottom metrics -->
+        <rect x="258" y="248" width="100" height="24" rx="6" fill="#e8f0fe"/><text x="308" y="265" text-anchor="middle" font-size="10" font-weight="700" fill="#003594" font-family="system-ui">HPCA 2024</text>
+        <rect x="373" y="248" width="100" height="24" rx="6" fill="#e8f5e9"/><text x="423" y="265" text-anchor="middle" font-size="10" font-weight="700" fill="#2e7d32" font-family="system-ui">HPCA 2025</text>
+        <rect x="488" y="248" width="130" height="24" rx="6" fill="#fff3e0"/><text x="553" y="265" text-anchor="middle" font-size="10" font-weight="700" fill="#e65100" font-family="system-ui">Up to 2.7x Speedup</text>
+      </svg>
+    </a>
+    <div class="featured-project-body">
+      <h3><a href="./projects/grit-oasis.html">Scalable and Adaptive Memory Management for Multi-GPU Unified Memory Systems</a></h3>
+      <p class="featured-project-desc">
+        A runtime system for dynamic page placement in UVM-enabled multi-GPU platforms. GRIT learns per-page behavior using fault-aware indicators and neighbor prediction; OASIS shifts control to object granularity for lower overhead. Together they deliver <strong>up to 2.7x speedup</strong> over default UVM on multi-GPU AI workloads.
+      </p>
+      <div class="project-tags">
+        <span class="tag">Multi-GPU Systems</span>
+        <span class="tag">Scalable Memory Systems</span>
+        <span class="tag">Adaptive Page Management</span>
+      </div>
+      <div class="featured-project-links">
+        <a href="./projects/grit-oasis.html" class="btn btn-sm">Project Page</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- SimPrune -->
+  <article class="featured-project">
+    <a href="https://shengli99.github.io/SimPrune" class="featured-project-figure">
+      <img src="./projects/img/simprune-visual.jpg" alt="SimPrune pruning visualization vs. conventional attention-based methods">
+    </a>
+    <div class="featured-project-body">
+      <h3><a href="https://shengli99.github.io/SimPrune">SimPrune: Similarity-Based Token Pruning for Efficient Self-Supervised Vision Transformers</a></h3>
+      <p class="featured-project-desc">
+        A cross-branch token pruning strategy for dual-encoder self-supervised learning. SimPrune matches and prunes token pairs based on cosine similarity between online and target branches, producing more symmetric and semantically consistent pruning than attention-based methods. Achieves <strong>24% training FLOPs reduction</strong> without sacrificing downstream accuracy.
+      </p>
+      <div class="project-tags">
+        <span class="tag">Token Pruning</span>
+        <span class="tag">Self-Supervised Learning</span>
+        <span class="tag">Vision Transformers</span>
+        <span class="tag">Efficient Training</span>
+        <span class="tag">Edge AI</span>
+      </div>
+      <div class="featured-project-links">
+        <a href="https://shengli99.github.io/SimPrune" class="btn btn-sm">Project Page</a>
+      </div>
+    </div>
+  </article>
+
+</section>
+
+<!-- ── All Research Areas ──────────────────────────────── -->
+<section class="section">
+  <h2 class="section-title">Research Areas</h2>
+
   <section class="project-card">
     <div class="project-header">
       <h2>Scalable GPU and AI Hardware Systems</h2>
@@ -75,9 +243,7 @@
       Building the architecture, memory, and runtime systems for foundation-scale AI. Our work targets the
       systems barriers that limit multi-GPU platforms and AI workloads: distributed address translation, page placement,
       inter-GPU data movement, GNN irregularity, hybrid DNN parallelism, attention execution, KV-cache growth, and
-      multi-tenant interference. Looking forward, we are developing RAG-aware serving runtimes, predictive KV reuse,
-      prefill-decode disaggregation support, and accelerator mechanisms for speculative decoding and near-memory
-      KV-cache lookup.
+      multi-tenant interference.
     </p>
     <div class="project-tags">
       <span class="tag">GPU Architecture</span>
@@ -94,15 +260,12 @@
         <li>HPCA 2025 — OASIS: Object-Aware Page Management for Multi-GPU Systems</li>
         <li>MLSys 2025 — FastTree: Optimizing Attention Kernel and Runtime for Tree-Structured LLM Inference</li>
         <li>ASPLOS 2025 — Cascade: A Dependency-Aware Efficient Training Framework for Temporal GNNs</li>
-        <li>ICML 2025 — MemFreezing: Adversarial Attack on Temporal GNNs under Limited Future Knowledge</li>
         <li>HPCA 2024 — GRIT: Enhancing Multi-GPU Performance with Fine-Grained Dynamic Page Placement</li>
         <li>MICRO 2024 — STAR: Sub-Entry Sharing-Aware TLB for Multi-Instance GPU</li>
-        <li>HPCA 2023 — CEGMA: Coordinated Elastic Graph Matching Acceleration for Graph Matching Networks</li>
       </ul>
     </div>
   </section>
 
-  <!-- ── Project: Edge AI ─────────────────────────────────── -->
   <section class="project-card">
     <div class="project-header">
       <h2>Edge AI Systems</h2>
@@ -110,8 +273,7 @@
     </div>
     <p class="project-desc">
       Enabling AI models to adapt continuously on mobile GPUs and IoT-class devices without exceeding strict memory,
-      latency, energy, and thermal budgets. Our work restructures learning algorithms and system execution to reduce
-      redundant computation, freeze or prune low-value work, and preserve responsiveness as edge environments evolve.
+      latency, energy, and thermal budgets.
     </p>
     <div class="project-tags">
       <span class="tag">Edge Computing</span>
@@ -127,12 +289,10 @@
         <li>ICLR 2025 — Mutual Effort for Efficiency: Similarity-Based Token Pruning for Vision Transformers</li>
         <li>ICLR 2024 — Waxing-and-Waning: Efficient Self-Supervised Learning</li>
         <li>ICLR 2023 Spotlight — SmartFRZ: Attention-Based Layer Freezing for Efficient Training</li>
-        <li>DAC 2024 — LOTUS: Learning-Based Online Thermal and Latency Variation Management for Edge Devices</li>
       </ul>
     </div>
   </section>
 
-  <!-- ── Project: AI for Vision ───────────────────────────── -->
   <section class="project-card">
     <div class="project-header">
       <h2>AI for Computer Vision</h2>
@@ -140,9 +300,8 @@
     </div>
     <p class="project-desc">
       Developing systems techniques for high-quality visual intelligence and generation. A central direction is adaptive video
-      generation, where patchification and pruning co-evolve with the denoising process so computation follows the regions,
-      frames, and temporal dynamics that matter most. We also study hardware-aware acceleration for 3D Gaussian splatting,
-      efficient visual representation learning, and low-precision vision training.
+      generation, where patchification and pruning co-evolve with the denoising process so computation follows the regions
+      that matter most.
     </p>
     <div class="project-tags">
       <span class="tag">Computer Vision</span>
@@ -158,12 +317,10 @@
         <li>arXiv — Accelerating 3D Gaussian Splatting with Tensor Cores</li>
         <li>ICLR 2025 — Mutual Effort for Efficiency: Similarity-Based Token Pruning for Vision Transformers</li>
         <li>ICLR 2024 — Waxing-and-Waning: Efficient Self-Supervised Learning</li>
-        <li>ECCV 2022 — Generator-Free Low-Precision DNN Training with Stochastic Rounding</li>
       </ul>
     </div>
   </section>
 
-  <!-- ── Project: Quantum Computing Systems ───────────────── -->
   <section class="project-card">
     <div class="project-header">
       <h2>Quantum Computing Systems</h2>
@@ -171,9 +328,6 @@
     </div>
     <p class="project-desc">
       Building compiler, architecture, and classical-acceleration support for scalable and fault-tolerant quantum computing.
-      Our work targets noisy and heterogeneous hardware, including photonic systems and future multi-species platforms, by
-      mapping quantum programs into reliable execution plans, reducing re-execution overheads, and accelerating simulation,
-      decoding, and error-correction loops with GPUs.
     </p>
     <div class="project-tags">
       <span class="tag">Quantum Compilers</span>
@@ -189,10 +343,10 @@
         <li>ISCA 2025 — Reinforcement Learning-Guided Graph State Generation in Photonic Quantum Computers</li>
         <li>ASPLOS 2024 — FMCC: Flexible Measurement-Based Quantum Computation over Cluster State</li>
         <li>ASPLOS 2024 — QRCC: Evaluating Large Quantum Circuits on Small Quantum Computers</li>
-        <li>HPCA 2022 — Q-GPU: Optimizations for Quantum Circuit Simulation Using GPUs</li>
       </ul>
     </div>
   </section>
+</section>
 
 </div>
 </main>
