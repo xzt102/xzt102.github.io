@@ -545,7 +545,8 @@ a:hover { text-decoration: underline; }
 .featured-project-figure img {
   display: block;
   width: 100%;
-  height: auto;
+  max-height: 280px;
+  object-fit: contain;
   border-radius: 8px;
 }
 
