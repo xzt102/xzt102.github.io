@@ -600,8 +600,6 @@ a:hover { text-decoration: underline; }
   font-weight: 700;
   color: var(--color-text);
   margin-bottom: 1.5rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid var(--color-accent);
 }
 
 /* ── Projects Page ───────────────────────────────────────── */
